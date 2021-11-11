@@ -13,7 +13,6 @@ const FormList = ({ forms }: Props) => {
         <tr className="text-left uppercase ">
           <th className={`${spacing} rounded-tl-lg`}>Form</th>
           <th className={spacing}>Description</th>
-          <th className={spacing}></th>
           <th className={`${spacing} rounded-tr-lg`}></th>
         </tr>
       </thead>
@@ -33,20 +32,7 @@ const FormList = ({ forms }: Props) => {
               {form.title}
             </td>
             <td className={spacing}> {form.description}</td>
-            <td className={spacing}>
-              <Link href="/">
-                <a
-                  className="dark:text-blue-500 hover:underline"
-                  onClick={() =>
-                    alert(
-                      `Hey! unfortunately this isn't implement in the frontend yet :)`
-                    )
-                  }
-                >
-                  Take the Form
-                </a>
-              </Link>
-            </td>
+
             <td
               className={`${spacing} ${
                 index === forms.length - 1 ? "rounded-br-lg" : ""
