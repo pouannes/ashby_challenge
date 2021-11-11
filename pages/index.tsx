@@ -7,19 +7,22 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   const [data, setData] = React.useState(null);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const body = {
-        id: 1,
-      };
-      const res = await fetch(`/api/v1/forms/1`);
-      const json = await res.json();
-      console.log(json);
-      setData(json.name);
+  const onClick = async () => {
+    const body = {
+      title: "foo",
+      description: "bar",
+      formId: 1,
     };
 
-    fetchData();
-  }, []);
+    const res = await fetch(`/api/v1/forms/sections/1`, {
+      method: "get",
+      // body: JSON.stringify(body),
+    });
+
+    const json = await res.json();
+    console.log(json);
+    setData(json.name);
+  };
 
   return (
     <div className={styles.container}>
@@ -33,6 +36,8 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <button onClick={onClick}>fetch</button>
 
         <p className={styles.description}>
           Get started by editing {data}

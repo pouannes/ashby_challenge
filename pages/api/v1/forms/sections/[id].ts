@@ -1,16 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/utils/supabase";
-import { Form } from "@/types/form";
+import { Section } from "@/types/index";
 
-const get = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
+const get = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
   const {
     query: { id },
   } = req;
 
   if (typeof id === "string") {
     const { data } = await supabase
-      .from<Form>("forms")
-      // TODO: add the form sections too
+      .from<Section>("form_sections")
       .select()
       .eq("id", id)
       .single();
@@ -19,11 +18,11 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
       res.status(200).json(data);
     }
 
-    res.status(404).end("Form not found");
+    res.status(404).end("Section not found");
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
   const { method } = req;
 
   switch (method) {
