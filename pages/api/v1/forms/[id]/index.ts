@@ -15,7 +15,6 @@ const get = async (
   if (typeof id === "string") {
     const { data } = await supabase
       .from<FormWithSections>("forms")
-      // TODO: add the form sections too
       .select(
         `
         *,
@@ -27,11 +26,11 @@ const get = async (
       .eq("id", id)
       .single();
 
-    if (data !== null) {
-      return res.status(200).json(data);
+    if (data === null) {
+      return res.status(404).end("Form not found");
     }
 
-    return res.status(404).end("Form not found");
+    return res.status(200).json(data);
   }
 };
 

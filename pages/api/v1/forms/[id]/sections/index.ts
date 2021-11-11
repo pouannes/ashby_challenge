@@ -14,7 +14,8 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Section[]>) => {
   const { data: section } = await supabase
     .from<Section>("form_sections")
     .select()
-    .eq("form_id", id);
+    .eq("form_id", id)
+    .order("display_order");
 
   if (Array.isArray(section)) {
     return res.status(200).json(section);
@@ -57,9 +58,11 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Section[]>) => {
       { title, description, form_id: formId, display_order: displayOrder },
     ]);
 
-  if (!error && newSection !== null) {
-    return res.status(200).json(newSection);
+  if (error || newSection === null) {
+    return res.status(500).end("Something went wrong");
   }
+
+  return res.status(200).json(newSection);
 };
 
 const handler = async (

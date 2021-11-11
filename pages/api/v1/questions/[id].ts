@@ -17,11 +17,11 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Question>) => {
     .eq("id", id)
     .single();
 
-  if (data !== null) {
-    return res.status(200).json(data);
+  if (data === null) {
+    return res.status(404).end("Question not found");
   }
 
-  return res.status(404).end("Question not found");
+  return res.status(200).json(data);
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Question>) => {

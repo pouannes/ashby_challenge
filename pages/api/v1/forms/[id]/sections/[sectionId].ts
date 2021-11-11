@@ -27,13 +27,14 @@ const get = async (
       `
     )
     .eq("id", sectionId)
+    .order("display_order", { foreignTable: "form_questions" })
     .single();
 
-  if (data !== null) {
-    return res.status(200).json(data);
+  if (data === null) {
+    return res.status(404).end("Section not found");
   }
 
-  return res.status(404).end("Section not found");
+  return res.status(200).json(data);
 };
 
 const handler = async (
