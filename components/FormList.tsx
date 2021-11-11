@@ -18,9 +18,9 @@ const FormList = ({ forms }: Props) => {
         </tr>
       </thead>
       <tbody>
-        {forms.map((course, index) => (
+        {forms.map((form, index) => (
           <tr
-            key={course.id}
+            key={form.id}
             className={`${
               index % 2 === 0 ? "dark:bg-gray-800" : "dark:bg-gray-790"
             }`}
@@ -30,9 +30,9 @@ const FormList = ({ forms }: Props) => {
                 index === forms.length - 1 ? "rounded-bl-lg" : ""
               }`}
             >
-              {course.title}
+              {form.title}
             </td>
-            <td className={spacing}> {course.description}</td>
+            <td className={spacing}> {form.description}</td>
             <td className={spacing}>
               <Link href="/">
                 <a className="dark:text-blue-500 hover:underline">View</a>
@@ -43,7 +43,7 @@ const FormList = ({ forms }: Props) => {
                 index === forms.length - 1 ? "rounded-br-lg" : ""
               }`}
             >
-              <Link href={`/${course.id}`}>
+              <Link href={`/form/${form.id}`}>
                 <a className="dark:text-blue-500 hover:underline">Edit</a>
               </Link>
             </td>

@@ -79,9 +79,9 @@ I omitted generic columns that can be useful but aren't relevant to this exercis
 
 Error handling and parameter validation were kept pretty minimal in the code, because it's usually handled through global utilities that I didn't implement here.
 
-### No authentication / user handling
+### No authentication / permissions / user handling
 
-Authentication and handling object ownership was also kept minimal in the code. It was only included in:
+Authentication, permissions and object ownership was also kept minimal in the code. It was only included in:
 
 - The `Form` object, to know who the author of the form is.
 - The `Survey` object, to know who answered the form.

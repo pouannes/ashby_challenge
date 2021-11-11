@@ -24,6 +24,26 @@ const Home: NextPage = () => {
     fetchForms();
   }, []);
 
+  const createNewForm = async (title: string, description: string) => {
+    const body = {
+      title,
+      description,
+    };
+
+    const newForm: Form[] = await fetch(`/api/v1/forms`, {
+      method: "post",
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .catch((e) => console.log(e));
+
+    console.log(newForm);
+
+    setForms((prevForms) =>
+      !!prevForms ? [...prevForms, ...newForm] : newForm
+    );
+  };
+
   return (
     <div>
       <Head>
@@ -34,7 +54,7 @@ const Home: NextPage = () => {
 
       <main className="flex h-screen dark:bg-gray-950">
         <div className="w-full px-8 py-6 pt-10 mx-6 border border-b-0 border-gray-700 mt-14 dark:bg-gray-900 rounded-t-3xl">
-          <header className="mb-10 flex items-center w-full justify-between">
+          <header className="flex items-center justify-between w-full mb-10">
             <h1 className="text-3xl">Your forms</h1>
             <Button onClick={() => setNewFormOpen(true)}>
               Create new form
@@ -42,7 +62,11 @@ const Home: NextPage = () => {
           </header>
           {forms !== null ? <FormList forms={forms} /> : null}
         </div>
-        <NewFormDialog open={newFormOpen} setOpen={setNewFormOpen} />
+        <NewFormDialog
+          open={newFormOpen}
+          setOpen={setNewFormOpen}
+          createNewForm={createNewForm}
+        />
       </main>
     </div>
   );

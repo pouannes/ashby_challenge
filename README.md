@@ -31,10 +31,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### v1/surveys
 
-- **GET**: List all surveys
-- **POST**: Create a new survey
+- **GET**: List all surveys for a specific form
+- **POST**: Create a new survey for a specific form
 
-### v1/surveys/:id/answers
+### v1/surveys/:id
 
 - **GET**: List all answers for the survey with id `id`
 - **POST**: Create a new answer for the survey with id `id`

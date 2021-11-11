@@ -15,7 +15,7 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Question[]>) => {
     sectionId,
     isRequired = false,
     condition = null,
-    properties = {},
+    properties = null,
   } = parsedBody;
 
   const { data: section, error: sectionError } = await supabase
@@ -61,9 +61,11 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Question[]>) => {
       },
     ]);
 
-  if (!error && newQuestion !== null) {
-    return res.status(200).json(newQuestion);
+  if (error || newQuestion === null) {
+    return res.status(400).end("Something went wrong");
   }
+
+  return res.status(200).json(newQuestion);
 };
 
 const handler = async (

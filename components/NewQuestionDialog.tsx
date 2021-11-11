@@ -3,26 +3,29 @@ import { Dialog, Transition } from "@headlessui/react";
 import Button from "./Button";
 import TextField from "./TextField";
 
-type NewFormDialogProps = {
+type NewQuestionDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  createNewForm: (title: string, description: string) => void;
+  createNewQuestion: (title: string, description: string) => void;
 };
 
-export default function NewFormDialog({
+export default function NewQuestionDialog({
   open,
   setOpen,
-  createNewForm,
-}: NewFormDialogProps) {
+  createNewQuestion,
+}: NewQuestionDialogProps) {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    console.log("submitting");
 
-    await createNewForm(title, description);
+    await createNewQuestion(title, description);
+
     setTitle("");
     setDescription("");
+
     setOpen(false);
   };
 
@@ -36,18 +39,6 @@ export default function NewFormDialog({
         }}
       >
         <div className="min-h-screen px-4 text-center">
-          {/* <Transition.Child
-            as={React.Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 z-0" />
-          </Transition.Child> */}
-
           {/* This element is to trick the browser into centering the modal contents. */}
           <span
             className="inline-block h-screen align-middle"
@@ -69,7 +60,7 @@ export default function NewFormDialog({
                 as="h3"
                 className="mb-10 text-lg font-medium leading-6 text-gray-500 dark:text-gray-200"
               >
-                Create new form
+                Create new question
               </Dialog.Title>
               <form onSubmit={onSubmit}>
                 <TextField

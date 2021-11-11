@@ -1,22 +1,25 @@
-export type QuestionType =
-  | "text"
-  | "email"
-  | "single-select"
-  | "boolean"
-  | "file";
+import {
+  TextQuestion,
+  EmailQuestion,
+  SingleSelectQuestion,
+  BooleanQuestion,
+  FileQuestion,
+} from "./questionTypes";
+import { Condition } from "./condition";
 
-// TODO: define the condition type
-export type ConditionType = any;
+type AllQuestionTypes =
+  | TextQuestion
+  | EmailQuestion
+  | Omit<SingleSelectQuestion, "properties">
+  | BooleanQuestion
+  | FileQuestion;
 
-export type Question = {
+export type Question = AllQuestionTypes & {
   id: number;
   form_section_id: number;
-  type: QuestionType;
   title: string;
   description: string;
   display_order: number;
   is_required: boolean;
-  condition: ConditionType;
-  // TODO: intersect type with properties
-  properties: any;
+  condition: Condition;
 };
