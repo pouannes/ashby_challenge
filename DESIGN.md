@@ -75,6 +75,8 @@ This could mean "only show this question if either `question1` has value 1, or `
 
 This format was inspired by [Mapbox's expressions for computing values of properties](https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/).
 
+The way I'm thinking about it, interpreting the expression and hiding/showing the question would be the job of the frontend. However, if for some reason we don't want the frontend to have access to the question if the condition isn't fulfilled, we can move condition evaluation to the backend as well.
+
 ### No reuse of questions
 
 The database is designed in such a way that questions can't be re-used between forms: a `FormQuestion` belongs to a single `FormSection` which in turns belongs to a single `Form`.
