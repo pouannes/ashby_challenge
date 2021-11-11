@@ -11,7 +11,8 @@ const Home: NextPage = () => {
     const body = {
       title: "foo",
       description: "bar",
-      formId: 1,
+      sectionId: 1,
+      type: "text",
     };
 
     const res = await fetch(`/api/v1/forms/1/sections/1`, {

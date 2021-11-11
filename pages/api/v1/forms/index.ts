@@ -22,14 +22,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Form[]>) => {
         .insert([{ title, description }]);
 
       if (!error && newForm !== null) {
-        res.status(200).json(newForm);
+        return res.status(200).json(newForm);
       }
 
       break;
 
     default:
       res.setHeader("Allow", ["GET", "POST"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      return res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
 

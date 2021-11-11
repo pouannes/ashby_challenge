@@ -1,15 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/utils/supabase";
-import { Form } from "@/types/form";
+import { Form, Section } from "@/types/index";
 
-const get = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
+type FormWithSections = Form & { form_sections: Section[] };
+
+const get = async (
+  req: NextApiRequest,
+  res: NextApiResponse<FormWithSections>
+) => {
   const {
     query: { id },
   } = req;
 
   if (typeof id === "string") {
     const { data } = await supabase
-      .from<Form>("forms")
+      .from<FormWithSections>("forms")
       // TODO: add the form sections too
       .select(
         `
@@ -26,11 +31,14 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
       return res.status(200).json(data);
     }
 
-    res.status(404).end("Form not found");
+    return res.status(404).end("Form not found");
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<FormWithSections>
+) => {
   const { method } = req;
 
   switch (method) {
@@ -40,7 +48,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
 
     default:
       res.setHeader("Allow", ["GET"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      return res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
 

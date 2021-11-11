@@ -8,7 +8,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Section[]>) => {
   } = req;
 
   if (typeof id !== "string") {
-    return res.status(400).end("Form not found");
+    return res.status(400).end("Invalid request");
   }
 
   const { data: section } = await supabase
@@ -34,7 +34,7 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Section[]>) => {
     .single();
 
   if (formError) {
-    res.status(400).end(`Form with id ${formId} wasn't found.`);
+    return res.status(404).end(`Form with id ${formId} wasn't found.`);
   }
 
   const { data: formSections, error: formSectionsError } = await supabase
@@ -58,7 +58,7 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Section[]>) => {
     ]);
 
   if (!error && newSection !== null) {
-    res.status(200).json(newSection);
+    return res.status(200).json(newSection);
   }
 };
 

@@ -1,8 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/utils/supabase";
-import { Section } from "@/types/index";
+import { Section, Question } from "@/types/index";
 
-const get = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
+type SectionWithQuestions = Section & { form_questions: Question[] };
+
+const get = async (
+  req: NextApiRequest,
+  res: NextApiResponse<SectionWithQuestions>
+) => {
   const {
     query: { sectionId },
   } = req;
@@ -12,7 +17,7 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
   }
 
   const { data } = await supabase
-    .from<Section>("form_sections")
+    .from<SectionWithQuestions>("form_sections")
     .select(
       `
         *,
@@ -25,13 +30,16 @@ const get = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
     .single();
 
   if (data !== null) {
-    res.status(200).json(data);
+    return res.status(200).json(data);
   }
 
-  res.status(404).end("Section not found");
+  return res.status(404).end("Section not found");
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<SectionWithQuestions>
+) => {
   const { method } = req;
 
   switch (method) {
@@ -41,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
 
     default:
       res.setHeader("Allow", ["GET"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      return res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
 
