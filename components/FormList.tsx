@@ -35,7 +35,16 @@ const FormList = ({ forms }: Props) => {
             <td className={spacing}> {form.description}</td>
             <td className={spacing}>
               <Link href="/">
-                <a className="dark:text-blue-500 hover:underline">View</a>
+                <a
+                  className="dark:text-blue-500 hover:underline"
+                  onClick={() =>
+                    alert(
+                      `Hey! unfortunately this isn't implement in the frontend yet :)`
+                    )
+                  }
+                >
+                  Take the Form
+                </a>
               </Link>
             </td>
             <td
