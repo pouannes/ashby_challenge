@@ -1,26 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/utils/supabase";
-import { Form } from "@/types/form";
+import { Survey } from "@/types/index";
 
-const get = async (res: NextApiResponse<Form[]>) => {
-  const { data: form } = await supabase.from<Form>("forms").select();
+const get = async (res: NextApiResponse<Survey[]>) => {
+  const { data: survey } = await supabase.from<Survey>("survey").select();
 
-  if (!Array.isArray(form)) {
+  if (!Array.isArray(survey)) {
     return res.status(500).end("Something went wrong");
   }
 
-  return res.status(200).json(form);
+  return res.status(200).json(survey);
 };
 
-const post = async (req: NextApiRequest, res: NextApiResponse<Form[]>) => {
+const post = async (req: NextApiRequest, res: NextApiResponse<Survey[]>) => {
   const { body } = req;
 
   const parsedBody = JSON.parse(body);
-  const { title, description } = parsedBody;
+  const { formId, userId } = parsedBody;
 
   const { data: newForm, error } = await supabase
-    .from<Form>("forms")
-    .insert([{ title, description }]);
+    .from<Survey>("survey")
+    .insert([{ form_id: formId, user_id: userId }]);
 
   if (error || newForm === null) {
     return res.status(500).end("Something went wrong");
@@ -29,7 +29,7 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Form[]>) => {
   return res.status(200).json(newForm);
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Form[]>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Survey[]>) => {
   const { method } = req;
 
   switch (method) {
