@@ -1,28 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/utils/supabase";
-import { Section } from "@/types/index";
+import { Form } from "@/types/form";
 
-const get = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
+const get = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
   const {
     query: { id },
   } = req;
 
   if (typeof id === "string") {
     const { data } = await supabase
-      .from<Section>("form_sections")
-      .select()
+      .from<Form>("forms")
+      // TODO: add the form sections too
+      .select(
+        `
+        *,
+        form_sections (
+          *
+        )
+      `
+      )
       .eq("id", id)
       .single();
 
     if (data !== null) {
-      res.status(200).json(data);
+      return res.status(200).json(data);
     }
 
-    res.status(404).end("Section not found");
+    res.status(404).end("Form not found");
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Section>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Form>) => {
   const { method } = req;
 
   switch (method) {

@@ -2,13 +2,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/utils/supabase";
 import { Section, Form } from "@/types/index";
 
-const get = async (res: NextApiResponse<Section[]>) => {
+const get = async (req: NextApiRequest, res: NextApiResponse<Section[]>) => {
+  const {
+    query: { id },
+  } = req;
+
+  if (typeof id !== "string") {
+    return res.status(400).end("Form not found");
+  }
+
   const { data: section } = await supabase
     .from<Section>("form_sections")
-    .select();
+    .select()
+    .eq("form_id", id);
 
   if (Array.isArray(section)) {
-    res.status(200).json(section);
+    return res.status(200).json(section);
   }
 };
 
@@ -61,7 +70,7 @@ const handler = async (
 
   switch (method) {
     case "GET":
-      await get(res);
+      await get(req, res);
       break;
 
     case "POST":
