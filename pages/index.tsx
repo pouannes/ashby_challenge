@@ -53,7 +53,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex h-screen dark:bg-gray-950">
-        <div className="w-full px-8 py-6 pt-10 mx-6 border border-b-0 border-gray-700 mt-14 dark:bg-gray-900 rounded-t-3xl">
+        <div className="w-full px-8 py-6 pt-10 mx-6 border border-b-0 border-gray-700 mt-14 dark:bg-gray-900 rounded-t-3xl max-w-7xl">
           <header className="flex items-center justify-between w-full mb-10">
             <h1 className="text-3xl">Your forms</h1>
             <Button onClick={() => setNewFormOpen(true)}>
