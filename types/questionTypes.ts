@@ -1,10 +1,12 @@
 export type TextQuestion = {
   type: "text";
+  properties: null;
   value: string;
 };
 
 export type EmailQuestion = {
   type: "email";
+  properties: null;
   value: string;
 };
 
@@ -18,11 +20,13 @@ export type SingleSelectQuestion = {
 
 export type BooleanQuestion = {
   type: "boolean";
+  properties: null;
   value: boolean;
 };
 
 export type FileQuestion = {
   type: "file";
   // URL of the file
+  properties: null;
   value: string;
 };

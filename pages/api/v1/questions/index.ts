@@ -15,7 +15,7 @@ const post = async (req: NextApiRequest, res: NextApiResponse<Question[]>) => {
     sectionId,
     isRequired = false,
     condition = null,
-    properties = null,
+    properties,
   } = parsedBody;
 
   const { data: section, error: sectionError } = await supabase

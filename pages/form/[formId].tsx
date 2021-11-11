@@ -83,11 +83,16 @@ const FormPage: NextPage<FormPageProps> = ({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { formId } = context.params as { formId: string };
 
-  const form: Form = await fetch(
-    `http://localhost:3000/api/v1/forms/${formId}`
-  ).then((res) => res.json());
+  console.log(process.env.NODE_ENV);
+
+  const url =
+    process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
+
+  const form: Form = await fetch(`${url}/api/v1/forms/${formId}`).then((res) =>
+    res.json()
+  );
   const sections: Section[] = await fetch(
-    `http://localhost:3000/api/v1/forms/${formId}/sections`
+    `${url}/api/v1/forms/${formId}/sections`
   ).then((res) => res.json());
 
   let sectionId;
@@ -96,7 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // if this is a new form with no question, create a first section
   if (sections.length === 0) {
     const newSection: Section = await fetch(
-      `http://localhost:3000/api/v1/forms/${formId}/sections`,
+      `${url}/api/v1/forms/${formId}/sections`,
       {
         method: "post",
         body: JSON.stringify({
@@ -109,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } else {
     // retrieve existing questions for the first section of this form
     const firstSection: SectionWithQuestions = await fetch(
-      `http://localhost:3000/api/v1/forms/${formId}/sections/${sections[0].id}`
+      `${url}/api/v1/forms/${formId}/sections/${sections[0].id}`
     ).then((res) => res.json());
 
     questions = firstSection.form_questions;
