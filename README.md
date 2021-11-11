@@ -1,5 +1,44 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## API endpoints implemented
+
+### v1/forms
+
+- **GET**: List all forms
+- **POST**: Create a new form
+
+### v1/forms/:id
+
+- **GET**: Retrieves form with id `id`
+
+### v1/forms/:id/sections
+
+- **GET**: List all sections of form with id `id`
+- **POST**: Create a new section for form with id `id`
+
+### v1/forms/:id/sections/:sectionId
+
+- **GET**: Retrieves section with id `sectionId` of form with id `id`, along with all of its associated questions
+
+### v1/questions
+
+- **GET**: Retrieves questions for a specific section
+- **POST**: Create a new question
+
+### v1/questions/:id
+
+- **GET**: Retrieve question with id `id`
+
+### v1/surveys
+
+- **GET**: List all surveys
+- **POST**: Create a new survey
+
+### v1/surveys/:id/answers
+
+- **GET**: List all answers for the survey with id `id`
+- **POST**: Create a new answer for the survey with id `id`
+
 ## Getting Started
 
 First, run the development server:
