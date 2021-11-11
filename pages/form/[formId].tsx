@@ -90,12 +90,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       ? "http://localhost:3000"
       : "https://ashby-challenge.vercel.app";
 
-  const form: Form = await fetch(`${url}/api/v1/forms/${formId}`).then((res) =>
-    res.json()
-  );
-  const sections: Section[] = await fetch(
-    `${url}/api/v1/forms/${formId}/sections`
-  ).then((res) => res.json());
+  const [form, sections]: [Form, Section[]] = await Promise.all([
+    fetch(`${url}/api/v1/forms/${formId}`).then((res) => res.json()),
+    fetch(`${url}/api/v1/forms/${formId}/sections`).then((res) => res.json()),
+  ]);
 
   let sectionId;
   let questions: Question[] = [];
